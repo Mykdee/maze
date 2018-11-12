@@ -92,6 +92,7 @@ print("End Time: ", t1)
 total = t1 -t0
 print("Time Taken: ", total)
 
+length = len(resultpath)
 #print("Total Steps: ", length)
 
 print ("Saving Image")
