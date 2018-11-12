@@ -1,16 +1,16 @@
 from PIL import Image
-Image.MAX_IMAGE_PIXELS = 1000000000 
+Image.MAX_IMAGE_PIXELS = 1000000000
 import time
 
-image = "F:\\WorkBench\\Maze Solver\\tiny.png"
-##image = "F:\\WorkBench\\Maze Solver\\small.png"
-##image = "F:\\WorkBench\\Maze Solver\\normal.png"
-##image = "F:\\WorkBench\\Maze Solver\\braid200.png"
-##image = "F:\\WorkBench\\Maze Solver\\braid2k.png"
-##image = "F:\\WorkBench\\Maze Solver\\perfect15k.png"
-#image = "F:\\WorkBench\\Maze Solver\\p15ktest2.png"
+image = "tiny.png"
+##image = "small.png"
+##image = "normal.png"
+##image = "braid200.png"
+##image = "braid2k.png"
+##image = "perfect15k.png"
+#image = "p15ktest2.png"
 
-output_file = "F:\\WorkBench\\Maze Solver\\Out.png"
+output_file = "Out.png"
 startPos = None
 endPos = None
 completed = False
@@ -27,11 +27,11 @@ rowList = []
 rowCount = 0
 for i in data:
     rowCount = len(rowList)
-    
+
     if rowCount < width:
         rowList.append(i)
     rowCount = len(rowList)
-   
+
     if rowCount >= width:
         listMap.append(rowList)
         rowList = []
@@ -84,7 +84,7 @@ while not completed:
         completed = True
         print("Found The Exit")
 
-        
+
 t1 = time.time()
 print("End Time: ", t1)
 total = t1 -t0
