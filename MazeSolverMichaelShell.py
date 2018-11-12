@@ -71,8 +71,17 @@ Use this space for helper functions and declaring varibales
 initcoord = (0, startPos)
 endcoord = (height-1, endPos)
 currentPos = initcoord
-
 resultpath = ()
+
+
+def move(pos):
+    if pos[0] < height-1:
+        newpos = pos[0]+1, pos[1]
+    else:
+        newpos = pos[0], pos[1]+1
+
+    return newpos
+
 
 
 while True:
@@ -86,6 +95,8 @@ while True:
     if currentPos == endcoord:
         break
         print("Found The Exit")
+
+    currentPos = move(pos=currentPos)
 
     resultpath = resultpath + (currentPos,)
 
