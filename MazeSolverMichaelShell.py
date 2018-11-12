@@ -69,6 +69,9 @@ print("Start Time: ", t0)
 Use this space for helper functions and declaring varibales
 """
 
+initcoord = (0, startPos)
+endcoord = (height-1, endPos)
+currentPos = initcoord
 
 
 
@@ -80,7 +83,7 @@ while not completed:
     """
 
     # Dont for get to change this to something that sets completed to True
-    if currentPos == [height -1 , endPos]:
+    if currentPos == endcoord:
         completed = True
         print("Found The Exit")
 
