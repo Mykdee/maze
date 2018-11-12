@@ -74,6 +74,7 @@ Use this space for helper functions and declaring varibales
 
 while not completed:
 
+    # functions will go here
     """
     Michael put your movement code here
 
