@@ -72,6 +72,7 @@ initcoord = (0, startPos)
 endcoord = (height-1, endPos)
 currentPos = initcoord
 
+resultpath = ()
 
 
 while True:
@@ -85,6 +86,8 @@ while True:
     if currentPos == endcoord:
         break
         print("Found The Exit")
+
+    resultpath = resultpath + (currentPos,)
 
 
 t1 = time.time()
