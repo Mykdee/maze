@@ -13,7 +13,6 @@ image = "tiny.png"
 output_file = "Out.png"
 startPos = None
 endPos = None
-completed = False
 
 print("Loading Map Images")
 t0 = time.time()
@@ -75,7 +74,7 @@ currentPos = initcoord
 
 
 
-while not completed:
+while True:
 
     """
     Michael put your movement code here
@@ -84,7 +83,7 @@ while not completed:
 
     # Dont for get to change this to something that sets completed to True
     if currentPos == endcoord:
-        completed = True
+        break
         print("Found The Exit")
 
 
