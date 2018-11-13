@@ -71,7 +71,22 @@ Use this space for helper functions and declaring varibales
 initcoord = (0, startPos)
 endcoord = (height-1, endPos)
 currentPos = initcoord
+orientation = 'south'
 resultpath = ()
+
+
+def check_left_wall(pos, orientation):
+    if orientation == 'south':
+        leftcoord = pos[0]+1, pos[1]
+    elif orientation == 'north':
+        leftcoord = pos[0]-1, pos[1]
+    elif orientation == 'east':
+        leftcoord = pos[0], pos[1]+1
+    elif orientation == 'west':
+        leftcoord = pos[0], pos[1]-1
+
+    return bool(listMap[leftcoord[0]][leftcoord[1]])
+
 
 
 def move(pos):
@@ -95,6 +110,8 @@ while True:
     if currentPos == endcoord:
         break
         print("Found The Exit")
+
+    is_leftwall = check_left_wall(pos=currentPos, orientation=orientation)
 
     currentPos = move(pos=currentPos)
 
