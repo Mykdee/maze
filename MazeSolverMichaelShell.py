@@ -111,7 +111,7 @@ def check_front_wall(pos, orientation):
 
 
 def turn(orientation, clockwise=True):
-    repeat = range(1) if clockwise else range(3)
+    repeat = range(3) if clockwise else range(1)
 
     for turn in repeat:
         if orientation == 'north':
@@ -134,12 +134,12 @@ def move(pos, orientation):
     # else:
     #     newpos = pos[0], pos[1]+1
     if orientation == 'north':
+        newpos = pos[0]-1, pos[1]
+    elif orientation == 'west':
+        newpos = pos[0], pos[1]+1
+    elif orientation == 'south':
         newpos = pos[0]+1, pos[1]
     elif orientation == 'east':
-        newpos = pos[0]-1, pos[1]
-    elif orientation == 'south':
-        newpos = pos[0], pos[1]+1
-    elif orientation == 'west':
         newpos = pos[0], pos[1]-1
 
     return newpos
@@ -192,7 +192,16 @@ t1 = time.time()
 print("End Time: ", t1)
 total = t1 -t0
 print("Time Taken: ", total)
-
+# resultpath = (
+#     (0, 3),
+#     (1, 3),
+#     (1, 4),
+#     (1, 5),
+#     (1, 6),
+#     (1, 7),
+#     (2, 7),
+#     (3, 7),
+#     )
 print('\n\n===> STEPS:')
 print(resultpath)
 
