@@ -3,7 +3,7 @@ Image.MAX_IMAGE_PIXELS = 1000000000
 import time
 
 
-MAXITER = 10
+MAXITER = 1000
 CURRENTITER = 0
 
 image = "tiny.png"
@@ -92,7 +92,12 @@ def check_left_wall(pos, orientation):
     elif orientation == 'west':
         leftcoord = pos[0]-1, pos[1]
 
-    return not bool(listMap[leftcoord[0]][leftcoord[1]])
+    try:
+        result = not bool(listMap[leftcoord[0]][leftcoord[1]])
+    except:
+        result = True
+
+    return result
 
 
 
@@ -106,7 +111,12 @@ def check_front_wall(pos, orientation):
     elif orientation == 'west':
         frontcoord = pos[0], pos[1]+1
 
-    return not bool(listMap[frontcoord[0]][frontcoord[1]])
+    try:
+        result = not bool(listMap[frontcoord[0]][frontcoord[1]])
+    except:
+        result = True
+
+    return result
 
 
 
@@ -171,15 +181,17 @@ while True:
     if not is_leftwall:
         orientation = turn(orientation=orientation)
         currentPos = move(pos=currentPos, orientation=orientation)
+        resultpath = resultpath + (currentPos,)
+
     else:
         if not is_frontwall:
             currentPos = move(pos=currentPos, orientation=orientation)
+            resultpath = resultpath + (currentPos,)
 
         else:
             orientation = turn(orientation=orientation, clockwise=False)
 
 
-    resultpath = resultpath + (currentPos,)
 
     CURRENTITER += 1
 
@@ -192,6 +204,7 @@ t1 = time.time()
 print("End Time: ", t1)
 total = t1 -t0
 print("Time Taken: ", total)
+print('--> steps taken:', CURRENTITER)
 # resultpath = (
 #     (0, 3),
 #     (1, 3),
