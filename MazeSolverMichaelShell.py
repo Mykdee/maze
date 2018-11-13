@@ -89,7 +89,28 @@ def check_left_wall(pos, orientation):
 
 
 
-def move(pos):
+def turn(orientation, left=True):
+    repeat = range(1)
+
+    if not left:
+        repeat = range(3)
+
+    for turn in repeat:
+        if orientation == 'north':
+            orientation = 'east'
+        elif orientation == 'east':
+            orientation = 'south'
+        elif orientation == 'south':
+            orientation = 'west'
+        elif orientation == 'west':
+            orientation = 'north'
+
+    return orientation
+
+
+
+
+def move(pos, orientation):
     if pos[0] < height-1:
         newpos = pos[0]+1, pos[1]
     else:
