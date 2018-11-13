@@ -110,20 +110,17 @@ def check_front_wall(pos, orientation):
 
 
 
-def turn(orientation, left=True):
-    repeat = range(1)
-
-    if not left:
-        repeat = range(3)
+def turn(orientation, clockwise=True):
+    repeat = range(1) if clockwise else range(3)
 
     for turn in repeat:
         if orientation == 'north':
-            orientation = 'east'
-        elif orientation == 'east':
-            orientation = 'south'
-        elif orientation == 'south':
             orientation = 'west'
         elif orientation == 'west':
+            orientation = 'south'
+        elif orientation == 'south':
+            orientation = 'east'
+        elif orientation == 'east':
             orientation = 'north'
 
     return orientation
@@ -179,7 +176,7 @@ while True:
             currentPos = move(pos=currentPos, orientation=orientation)
 
         else:
-            orientation = turn(orientation=orientation, left=False)
+            orientation = turn(orientation=orientation, clockwise=False)
 
 
     resultpath = resultpath + (currentPos,)
