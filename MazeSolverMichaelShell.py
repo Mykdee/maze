@@ -3,7 +3,7 @@ Image.MAX_IMAGE_PIXELS = 1000000000
 import time
 
 
-MAXITER = 1000
+MAXITER = 10
 CURRENTITER = 0
 
 image = "tiny.png"
@@ -76,8 +76,9 @@ initcoord = (0, startPos)
 endcoord = (height-1, endPos)
 currentPos = initcoord
 orientation = 'south'
-resultpath = ()
+resultpath = (initcoord,)
 is_leftwall = None
+is_frontwall = None
 
 
 def check_left_wall(pos, orientation):
@@ -91,7 +92,7 @@ def check_left_wall(pos, orientation):
     elif orientation == 'west':
         leftcoord = pos[0]-1, pos[1]
 
-    return bool(listMap[leftcoord[0]][leftcoord[1]])
+    return not bool(listMap[leftcoord[0]][leftcoord[1]])
 
 
 
@@ -105,7 +106,7 @@ def check_front_wall(pos, orientation):
     elif orientation == 'west':
         frontcoord = pos[0], pos[1]+1
 
-    return bool(listMap[frontcoord[0]][frontcoord[1]])
+    return not bool(listMap[frontcoord[0]][frontcoord[1]])
 
 
 
@@ -154,19 +155,21 @@ while True:
     Michael put your movement code here
 
     """
+    is_leftwall = check_left_wall(
+        pos=currentPos, orientation=orientation)
+    is_frontwall = check_front_wall(
+        pos=currentPos, orientation=orientation)
+
     print('\n--> current pos:', currentPos)
     print('--> orientation:', orientation)
     print('--> is wall to left:', is_leftwall)
+    print('--> is wall to front:', is_frontwall)
 
     # Dont for get to change this to something that sets completed to True
     if currentPos == endcoord:
         break
         print("Found The Exit")
 
-    is_leftwall = check_left_wall(
-        pos=currentPos, orientation=orientation)
-    is_frontwall = check_front_wall(
-        pos=currentPos, orientation=orientation)
 
     if not is_leftwall:
         orientation = turn(orientation=orientation)
