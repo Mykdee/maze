@@ -2,6 +2,10 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = 1000000000
 import time
 
+
+MAXITER = 1000
+CURRENTITER = 0
+
 image = "tiny.png"
 ##image = "small.png"
 ##image = "normal.png"
@@ -77,16 +81,31 @@ is_leftwall = None
 
 
 def check_left_wall(pos, orientation):
-    if orientation == 'south':
-        leftcoord = pos[0]+1, pos[1]
-    elif orientation == 'north':
-        leftcoord = pos[0]-1, pos[1]
-    elif orientation == 'east':
-        leftcoord = pos[0], pos[1]+1
-    elif orientation == 'west':
+    if orientation == 'north':
         leftcoord = pos[0], pos[1]-1
+    elif orientation == 'south':
+        leftcoord = pos[0], pos[1]+1
+
+    elif orientation == 'east':
+        leftcoord = pos[0]+1, pos[1]
+    elif orientation == 'west':
+        leftcoord = pos[0]-1, pos[1]
 
     return bool(listMap[leftcoord[0]][leftcoord[1]])
+
+
+
+def check_front_wall(pos, orientation):
+    if orientation == 'north':
+        frontcoord = pos[0]-1, pos[1]
+    elif orientation == 'south':
+        frontcoord = pos[0]+1, pos[1]
+    elif orientation == 'east':
+        frontcoord = pos[0], pos[1]-1
+    elif orientation == 'west':
+        frontcoord = pos[0], pos[1]+1
+
+    return bool(listMap[frontcoord[0]][frontcoord[1]])
 
 
 
@@ -112,10 +131,18 @@ def turn(orientation, left=True):
 
 
 def move(pos, orientation):
-    if pos[0] < height-1:
+    # if pos[0] < height-1:
+    #     newpos = pos[0]+1, pos[1]
+    # else:
+    #     newpos = pos[0], pos[1]+1
+    if orientation == 'north':
         newpos = pos[0]+1, pos[1]
-    else:
+    elif orientation == 'east':
+        newpos = pos[0]-1, pos[1]
+    elif orientation == 'south':
         newpos = pos[0], pos[1]+1
+    elif orientation == 'west':
+        newpos = pos[0], pos[1]-1
 
     return newpos
 
@@ -136,20 +163,38 @@ while True:
         break
         print("Found The Exit")
 
-    is_leftwall = check_left_wall(pos=currentPos, orientation=orientation)
+    is_leftwall = check_left_wall(
+        pos=currentPos, orientation=orientation)
+    is_frontwall = check_front_wall(
+        pos=currentPos, orientation=orientation)
 
     if not is_leftwall:
         orientation = turn(orientation=orientation)
+        currentPos = move(pos=currentPos, orientation=orientation)
+    else:
+        if not is_frontwall:
+            currentPos = move(pos=currentPos, orientation=orientation)
 
-    currentPos = move(pos=currentPos, orientation=orientation)
+        else:
+            orientation = turn(orientation=orientation, left=False)
+
 
     resultpath = resultpath + (currentPos,)
+
+    CURRENTITER += 1
+
+    if CURRENTITER == MAXITER:
+        print('==> REACHED ITERLIMIT !!! ---')
+        break
 
 
 t1 = time.time()
 print("End Time: ", t1)
 total = t1 -t0
 print("Time Taken: ", total)
+
+print('\n\n===> STEPS:')
+print(resultpath)
 
 length = len(resultpath)
 #print("Total Steps: ", length)
