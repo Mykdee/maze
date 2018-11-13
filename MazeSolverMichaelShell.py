@@ -73,6 +73,7 @@ endcoord = (height-1, endPos)
 currentPos = initcoord
 orientation = 'south'
 resultpath = ()
+is_leftwall = None
 
 
 def check_left_wall(pos, orientation):
@@ -126,6 +127,9 @@ while True:
     Michael put your movement code here
 
     """
+    print('\n--> current pos:', currentPos)
+    print('--> orientation:', orientation)
+    print('--> is wall to left:', is_leftwall)
 
     # Dont for get to change this to something that sets completed to True
     if currentPos == endcoord:
@@ -134,7 +138,10 @@ while True:
 
     is_leftwall = check_left_wall(pos=currentPos, orientation=orientation)
 
-    currentPos = move(pos=currentPos)
+    if not is_leftwall:
+        orientation = turn(orientation=orientation)
+
+    currentPos = move(pos=currentPos, orientation=orientation)
 
     resultpath = resultpath + (currentPos,)
 
